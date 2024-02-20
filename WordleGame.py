@@ -1,26 +1,40 @@
 
 class wordleGame:
-    def __init__(self, guesses, answers, accepts = None):
+    def __init__(self, guesses, answers, dictionary = 'small', accepts = None):
         if accepts is None:
             accepts = []
         if type(guesses) != list or type(answers) != list:
             raise TypeError('guesses and answers must be provided as lists')
         if len(answers) != len(guesses):
             raise ValueError('please provide an answer for each guess')
+        if dictionary not in ['small', 'large']:
+            raise ValueError("dictionary argument must either be 'small' or 'large'")
         self.guesses = guesses
         self.answers = answers
+        self.dictionary = dictionary
         self.accepts = accepts
         
         
     def giveGuesses(self):
-        with open('Files\wordle-answers-alphabetical.txt', 'r') as file:
+        if self.dictionary == 'small':
+            wordsFile = 'Files\wordle-answers-alphabetical.txt'
+            lookupTableFile = 'Files\lookup-table.txt'
+        else:
+            wordsFile = 'Files\sgb-words.txt'
+            lookupTableFile = 'Files\lookup-table-sgb.txt'
+        with open(wordsFile, 'r') as file:
             words = [w[:5] for w in file.readlines()]
-            table =  open('Files\lookup-table.txt', 'r')
+            table =  open(lookupTableFile, 'r')
             lookup_table = table.readlines()
             table.close()
             
             # if (self.guesses, self.answers) == ([], []):
-            #     return 'trace'
+            #      return [('trace', None),
+            #              ('least', None),
+            #              ('slate', None),
+            #              ('crate', None),
+            #              ('slant', None)]
+                         
             
             if self.accepts == []:
                 accepts = range(len(words))
@@ -54,51 +68,7 @@ class wordleGame:
 
 
 
-def solveWordle(wordle):
-    if type(wordle) != wordleGame:
-        raise TypeError('solveWordle must take a wordleGame as argument')
-    game, answer = wordle, None
-    while answer != 'GGGGG':
-        scores = game.giveGuesses()
-        guesses = [score[0] for score in scores] 
-        guessesDisplayed = 3
-        print(guesses[:guessesDisplayed])
-        while True == True:
-            moreGuesses = input('Show more guesses [Y/N]?: ')
-            while moreGuesses != 'Y' and moreGuesses != 'N':
-                moreGuesses = input('Show more guesses [Y/N]?: ')
-            if moreGuesses == 'N':
-                break
-            if guessesDisplayed == 30:
-                print(guesses[:30])
-                print('max number of guesses to be displayed is 30')
-                break
-            else:
-                guessesDisplayed += 3
-                print(guesses[:guessesDisplayed])
-        
-        with open('Files\wordle-answers-alphabetical.txt', 'r') as file:
-            words = [w[:5] for w in file.readlines()]
-            guess = input('guess: ')
-            while guess not in words:
-                print('please enter a valid wordle solution')
-                guess = input('guess: ')
-                
-        answer = input('answer: ')
-        while len(answer) != 5 or set(answer) - {'X', 'Y', 'G'} != set():
-            print('please enter valid answer')
-            answer = input('answer: ')
-        
-        if guess in guesses:
-            accepts = scores[guesses.index(guess)][2][answer]
-        else:
-            accepts = []
-        game = wordleGame([game.guesses] + [guess], 
-                          [game.answers] + [answer],
-                          accepts)
-        
-solveWordle(wordleGame([], []))    
-        
+
             
                             
                     
