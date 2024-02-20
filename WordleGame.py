@@ -28,12 +28,21 @@ class wordleGame:
             lookup_table = table.readlines()
             table.close()
             
-            # if (self.guesses, self.answers) == ([], []):
-            #      return [('trace', None),
-            #              ('least', None),
-            #              ('slate', None),
-            #              ('crate', None),
-            #              ('slant', None)]
+            if (self.guesses, self.answers) == ([], []):
+                scores = []
+                for i in [words.index('trace'), 
+                          words.index('least'),
+                          words.index('stale'),
+                          words.index('crate'),
+                          words.index('slant')]:
+                    patterns = {}
+                    for x in range(len(words)):
+                        try:
+                            patterns[lookup_table[i][x * 5 : (x + 1) * 5]].append(x)
+                        except: 
+                            patterns[lookup_table[i][x * 5 : (x + 1) * 5]] = [x]
+                    scores.append((words[i], None, patterns))
+                return scores
                          
             
             if self.accepts == []:
