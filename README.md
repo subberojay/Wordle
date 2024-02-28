@@ -1,0 +1,1 @@
+Included is a solver for any given Wordle puzzle. The program can take any game state as input, be it a fresh puzzle, or the layout once stuck after a few guesses. Run WordleSolver.py in the command line to launch the solver.
