@@ -46,5 +46,13 @@ def solveWordle(wordle):
                           accepts)
   
 if __name__ == "__main__":
-    solveWordle(wordleGame([], []))
+    print('Please enter your guesses so far as a comma separated list, e.g. grain, after, spear. If you are solving a new game prior to making any guesses, leave the prompt blank and hit enter.')
+    guesses = input('guesses: ')
+    print('\nNow give the responses given by Wordle, again as a comma separated list. For each guess, please give a five character string. The colours given to a letter by Wordle should be inputted as follows: ')
+    print('grey = X, yellow = Y, green = G')
+    print('So if "after" was guessed and f, t were not in the hidden word, a and e were, but we had them in the wrong place and r was in the word and was in the right place, one would input YXXYG')
+    answers = input('answers: ')
+    guesses = [g.strip() for g in guesses.split(',')]
+    answers = [a.strip() for a in answers.split(',')]
+    solveWordle(wordleGame(guesses, answers))
         

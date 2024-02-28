@@ -1,6 +1,6 @@
 
 class wordleGame:
-    def __init__(self, guesses, answers, dictionary = 'small', accepts = None):
+    def __init__(self, guesses, answers, dictionary = 'large', accepts = None):
         if accepts is None:
             accepts = []
         if type(guesses) != list or type(answers) != list:
@@ -43,8 +43,6 @@ class wordleGame:
                             patterns[lookup_table[i][x * 5 : (x + 1) * 5]] = [x]
                     scores.append((words[i], None, patterns))
                 return scores
-                         
-            
             if self.accepts == []:
                 accepts = range(len(words))
                 for (n, guess) in enumerate(self.guesses):
