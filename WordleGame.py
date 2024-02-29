@@ -28,7 +28,7 @@ class wordleGame:
             lookup_table = table.readlines()
             table.close()
             
-            if (self.guesses, self.answers) == ([], []):
+            if (self.guesses, self.answers) == ([''], ['']):
                 scores = []
                 for i in [words.index('trace'), 
                           words.index('least'),
