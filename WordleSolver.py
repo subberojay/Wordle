@@ -16,14 +16,14 @@ def solveWordle(wordle, gameMode = 'hard', guessesDisplayed = 5):
             print(guesses[:guessesDisplayed])
             with open(wordsFile, 'r') as file:
                 words = [w[:5] for w in file.readlines()]
-                guess = input('guess: ')
+                guess = input('guess: ').casefold()
                 while guess not in words:
                     print('guess not in current dictionary')
-                    guess = input('guess: ')
-            answer = input('answer: ')
+                    guess = input('guess: ').casefold()
+            answer = input('answer: ').upper()
             while len(answer) != 5 or set(answer) - {'X', 'Y', 'G'} != set():
                 print('please enter valid answer')
-                answer = input('answer: ')
+                answer = input('answer: ').upper()
             if guess in guesses:
                 accepts = scores[guesses.index(guess)][2][answer]
             else:
@@ -39,14 +39,14 @@ def solveWordle(wordle, gameMode = 'hard', guessesDisplayed = 5):
             print(guesses[:guessesDisplayed])
             with open(wordsFile, 'r') as file:
                 words = [w[:5] for w in file.readlines()]
-                guess = input('guess: ')
+                guess = input('guess: ').casefold()
                 while guess not in words:
                     print('guess not in current dictionary')
-                    guess = input('guess: ')
-            answer = input('answer: ')
+                    guess = input('guess: ').casefold()
+            answer = input('answer: ').upper()
             while len(answer) != 5 or set(answer) - {'X', 'Y', 'G'} != set():
                 print('please enter valid answer')
-                answer = input('answer: ')
+                answer = input('answer: ').upper()
             if guess in guesses:
                 accepts = scores[guesses.index(guess)][2][answer]
             else:
@@ -62,8 +62,8 @@ if __name__ == "__main__":
     guesses = input('guesses: ')
     while guesses == 'settings':
         print('Settings that may be altered are:'
-              '\n\nDictionary size - This can either be "small" or "large". Small contains only the 2315 that are potential wordles. Rarer words, plurals and more will never be the solution to a wordle and are excluded from this dictionary. Large contains 5755 words, but still not all five letter words. The default size is large.'
-              '\nGame mode - This can be "normal" or "hard". Wordle offers both regular and "Hard Mode" in its settings. In Wordle\'s Hard Mode, only guesses that fit the current pattern may be given. For example if we\'ve guessed TRACE and the T has turned yellow, our next guess must contain a T. Hard mode here obeys the same convention. The default mode is hard. Note that the solver runs quicker in hard mode, as it has less words to check.'
+              '\n\nDictionary size - This can either be "small" or "large". Small contains only the 2315 words that are potential wordles. Rarer words, plurals and more will never be the solution to a wordle and are excluded from this dictionary. Large contains 5755 words, but still not all five letter words. The default size is large.'
+              '\nGame mode - This can be "normal" or "hard". Wordle offers both regular and "Hard Mode" in its settings. In Wordle\'s "Hard Mode", only guesses that fit the current pattern may be given. For example if we\'ve guessed TRACE and the T has turned yellow, our next guess must contain a T. Hard mode here obeys the same convention. The default mode is hard. Note that the solver runs quicker in hard mode, as it has less words to check.'
               '\nGuesses displayed - This governs the maximum amount of suggestions the solver will give at a time. The default setting is 5.')
         settingToChange = None
         while settingToChange != '':
@@ -96,8 +96,8 @@ if __name__ == "__main__":
     '\n\n    grey = X, yellow = Y, green = G'
     '\n\nSo if "after" was guessed and f, t were not in the hidden word, a and e were, but we had them in the wrong place and r was in the word and was in the right place, we would input YXXYG')
     answers = input('answers: ')
-    guesses = [g.strip() for g in guesses.split(',')]
-    answers = [a.strip() for a in answers.split(',')]
+    guesses = [g.strip().casefold() for g in guesses.split(',')]
+    answers = [a.strip().upper() for a in answers.split(',')]
     if guesses == ['']:
         guesses = []
     if answers == ['']:
